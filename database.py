@@ -29,7 +29,7 @@ def todo_serializer(todo) -> dict:
 def user_serializer(user) -> dict:
     return {
         "id": str(user["_id"]),
-        "email": user["email"]
+        "email": user["email"],
     }
 
 # タスクを取得するための関数
@@ -82,13 +82,13 @@ async def db_signup(data: dict) -> dict:
     overlap_user = await collection_user.find_one({"email": email})
     if overlap_user:
         raise HTTPException(
-            status_code=400, detail='Email is already token'
+            status_code=400, detail='Email is already taken'
         )
     if not password or len(password) < 6:
         raise HTTPException(
             status_code=400, detail='Password too short'
         )
-    user = await collection_user.insert_one({"email": email, "password":auth.generate_hashed_pw(password)})
+    user = await collection_user.insert_one({"email": email, "password": auth.generate_hashed_pw(password)})
     new_user = await collection_user.find_one({"_id": user.inserted_id})
     return user_serializer(new_user)
 

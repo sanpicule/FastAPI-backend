@@ -13,7 +13,7 @@ class AuthJWTCsrf():
 
   # ユーザが入力したPWをハッシュ化するメソッド
   def generate_hashed_pw(self, password) -> str:
-    return self.pwd_ctx.hash(password)
+        return self.pwd_ctx.hash(password)
   
   # 入力されたPWとDBに保存されたハッシュ化されたPWが等しいか検証するメソッド
   def verify_pw(self, plain_pw, hashed_pw) -> bool:
